@@ -8,6 +8,7 @@ function setSwagger(app: INestApplication) {
     .setTitle('Demo API')
     .setDescription('The cats API description')
     .setVersion('1.0')
+    .addServer('/dev')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
