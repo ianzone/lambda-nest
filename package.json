@@ -10,7 +10,9 @@
     "debug": "nest start --debug --watch",
     "build": "nest build",
     "start": "nest build && sls offline",
-    "postinstall": "lefthook install"
+    "lint": "biome check --apply --no-errors-on-unmatched --files-ignore-unknown=true src",
+    "postinstall": "lefthook install",
+    "commit": "git add . && git-cz"
   },
   "dependencies": {
     "@codegenie/serverless-express": "^4.13.0",
@@ -35,6 +37,7 @@
     "@types/express": "^4.17.21",
     "@types/node": "^20.11.16",
     "esbuild": "^0.20.0",
+    "git-cz": "^4.9.0",
     "lefthook": "^1.6.1",
     "serverless": "^3.38.0",
     "serverless-esbuild": "^1.51.0",

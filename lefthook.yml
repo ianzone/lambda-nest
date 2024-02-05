@@ -13,7 +13,7 @@
 #       run: bundle audit
 pre-commit:
   commands:
-    "type check":
+    type-check:
       run: pnpm tsc --noEmit
-    "lint and format":
+    biome:
       run: pnpm biome check --apply --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
