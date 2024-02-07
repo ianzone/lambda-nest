@@ -31,7 +31,7 @@ const serverlessConfiguration: AWS = {
 
   functions: {
     api: {
-      handler: 'dist/src/lambda.handler',
+      handler: 'dist/lambda.handler',
       package: {
         patterns: ['public/**/*', 'views/**/*', 'node_modules/swagger-ui-dist/**/*'],
       },
