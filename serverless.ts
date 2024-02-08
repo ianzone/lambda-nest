@@ -55,7 +55,12 @@ const serverlessConfiguration: AWS = {
       // DO NOT minify, nest relies on classnames for reflection
       sourcemap: true,
       packager: 'pnpm',
-      exclude: ['class-transformer/storage', '@nestjs/websockets', '@nestjs/microservices'],
+      exclude: [
+        'class-transformer/storage',
+        '@nestjs/websockets',
+        '@nestjs/microservices',
+        'swagger-ui-dist',
+      ],
     },
   },
 };
