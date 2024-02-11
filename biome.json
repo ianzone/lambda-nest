@@ -20,5 +20,15 @@
   "formatter": {
     "indentStyle": "space",
     "lineWidth": 100
+  },
+  "linter": {
+    "rules": {
+      "style": {
+        "noNonNullAssertion": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "off"
+      }
+    }
   }
 }
