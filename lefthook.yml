@@ -13,7 +13,7 @@
 #       run: bundle audit
 pre-commit:
   commands:
-    type-check:
+    typescript:
       priority: 1
       run: pnpm tsc --noEmit
     biome:
