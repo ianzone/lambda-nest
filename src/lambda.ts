@@ -1,10 +1,16 @@
 import serverlessExpress from '@codegenie/serverless-express';
-import { APIGatewayProxyEvent, Callback, Context, Handler } from 'aws-lambda';
+import {
+  APIGatewayProxyEventV2,
+  APIGatewayProxyHandlerV2,
+  APIGatewayProxyResultV2,
+  Callback,
+  Context,
+} from 'aws-lambda';
 import { createApp } from './app';
 
-let server: Handler;
+let server: APIGatewayProxyHandlerV2;
 
-async function bootstrap(): Promise<Handler> {
+async function bootstrap() {
   const app = await createApp();
   await app.init();
 
@@ -12,11 +18,12 @@ async function bootstrap(): Promise<Handler> {
   return serverlessExpress({ app: expressApp });
 }
 
-export const handler: Handler = async (
-  event: APIGatewayProxyEvent,
+export const handler: APIGatewayProxyHandlerV2 = async (
+  event: APIGatewayProxyEventV2,
   context: Context,
   callback: Callback,
-) => {
+): Promise<APIGatewayProxyResultV2> => {
   server = server ?? (await bootstrap());
-  return server(event, context, callback);
+  const result = await server(event, context, callback);
+  return result || {};
 };

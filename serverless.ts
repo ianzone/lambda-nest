@@ -1,8 +1,8 @@
 import type { AWS } from '@serverless/typescript';
 
 const serverlessConfiguration: AWS = {
-  app: 'app-name',
-  service: 'lambda-name',
+  app: 'app',
+  service: '${self:app}-api',
 
   frameworkVersion: '3',
   configValidationMode: 'error',
@@ -10,8 +10,9 @@ const serverlessConfiguration: AWS = {
   provider: {
     name: 'aws',
     runtime: 'nodejs20.x',
+    memorySize: 512,
     architecture: 'arm64',
-    timeout: 29, // the maximum api gateway timeout is 29s
+    timeout: 29, // the maximum api gateway timeout is 30s
     tags: {
       developer: 'devName',
       project: '${self:app}',
@@ -20,31 +21,31 @@ const serverlessConfiguration: AWS = {
     logRetentionInDays: 60,
     environment: {
       STAGE: '${sls:stage}',
-      STAGE_PATH_PREFIX: '/${sls:stage}',
       NODE_OPTIONS: '--enable-source-maps',
+    },
+    httpApi: {
+      cors: { allowedOrigins: ['*'], allowCredentials: true },
     },
   },
 
-  package: {
-    individually: true,
-  },
-
+  // https://www.serverless.com/framework/docs/providers/aws/events/http-api
   functions: {
     api: {
       handler: 'dist/lambda.handler',
+      name: '${self:app}-${sls:stage}-api',
       package: {
         patterns: ['public/**/*', 'views/**/*', 'node_modules/swagger-ui-dist/**/*'],
       },
       events: [
         {
-          http: {
-            method: 'ANY',
-            path: '{proxy+}',
-            cors: true, // https://www.serverless.com/framework/docs/providers/aws/events/apigateway#enabling-cors
-          },
+          httpApi: '*',
         },
       ],
     },
+  },
+
+  package: {
+    individually: true,
   },
 
   // https://github.com/floydspace/serverless-esbuild

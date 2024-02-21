@@ -10,6 +10,7 @@
     "debug": "nest start --debug --watch",
     "build": "nest build",
     "start": "nest build && sls offline",
+    "deploy": "nest build && sls deploy --aws-s3-accelerate",
     "lint": "biome check --apply --no-errors-on-unmatched --files-ignore-unknown=true src",
     "postinstall": "lefthook install",
     "commit": "git add . && git-cz"
