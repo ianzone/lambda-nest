@@ -12,10 +12,18 @@
 #       tags: backend security
 #       run: bundle audit
 pre-commit:
+  piped: true
+  follow: true
   commands:
-    typescript:
+    staged:
       priority: 1
+      run: echo {staged_files}
+    typescript:
+      priority: 2
       run: pnpm tsc --noEmit
     biome:
-      priority: 2
+      priority: 3
       run: pnpm biome check --apply --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+    test:
+      priority: 4
+      run: echo 'vitest related --run'

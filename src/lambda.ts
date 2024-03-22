@@ -1,5 +1,5 @@
 import serverlessExpress from '@codegenie/serverless-express';
-import {
+import type {
   APIGatewayProxyEventV2,
   APIGatewayProxyHandlerV2,
   APIGatewayProxyResultV2,

@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { type MiddlewareConsumer, Module } from '@nestjs/common';
 import { RoutesModule } from './routes/routes.module';
 @Module({
   imports: [RoutesModule],
