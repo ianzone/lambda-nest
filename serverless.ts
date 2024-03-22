@@ -23,6 +23,11 @@ const serverlessConfiguration: AWS = {
       STAGE: '${sls:stage}',
       NODE_OPTIONS: '--enable-source-maps',
     },
+    iam: {
+      role: {
+        statements: [],
+      },
+    },
     httpApi: {
       cors: { allowedOrigins: ['*'], allowCredentials: true },
     },
@@ -54,7 +59,7 @@ const serverlessConfiguration: AWS = {
   custom: {
     esbuild: {
       minify: true,
-      keepNames: true, // nestjs relies on the name property for registration and binding purposes
+      keepNames: true, // nestjs relies on the name property for DI
       sourcemap: true,
       packager: 'pnpm',
       exclude: [
@@ -66,5 +71,15 @@ const serverlessConfiguration: AWS = {
     },
   },
 };
+
+const functions = serverlessConfiguration.functions;
+for (const name in functions) {
+  if (Object.prototype.hasOwnProperty.call(functions, name)) {
+    const fn = functions[name];
+    if (fn.name === undefined) {
+      fn.name = `\${self:app}-\${sls:stage}-${name}`;
+    }
+  }
+}
 
 module.exports = serverlessConfiguration;
