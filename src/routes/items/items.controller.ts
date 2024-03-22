@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Param, Patch, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
@@ -7,10 +7,12 @@ import { ItemsService } from './items.service';
 @ApiTags('Items')
 @Controller('items')
 export class ItemsController {
+  private readonly logger = new Logger(ItemsController.name);
   constructor(private readonly itemsService: ItemsService) {}
 
   @Post()
   create(@Body() createItemDto: CreateItemDto) {
+    this.logger.debug(createItemDto);
     return this.itemsService.create(createItemDto);
   }
 
