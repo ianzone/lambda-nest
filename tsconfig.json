@@ -6,7 +6,6 @@
     "baseUrl": ".",
     // Output
     "outDir": "dist",
-    "target": "ES2021", // the higher target crashes
     "sourceMap": true,
     "incremental": true,
     "removeComments": true,
